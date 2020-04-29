@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clear-impaired-volumes-taint
+  labels:
+    app: clear-impaired-volumes-taint
+  namespace: ops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: clear-impaired-volumes-taint
+  template:
+    metadata:
+      labels:
+        app: clear-impaired-volumes-taint
+    spec:
+      serviceAccountName: clear-impaired-volumes-taint
+      containers:
+      - name: clear-impaired-volumes-taint
+        image: bouwe/clear-impaired-volumes-taint:latest
+        ports:
+          - containerPort: 8000
+            name: web
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 10m
+            memory: 10Mi
+          limits:
+            cpu: 50m
+            memory: 50Mi
+        readinessProbe:
+          httpGet:
+            port: web
+            path: /healthz
+        livenessProbe:
+          httpGet:
+            port: web
+            path: /healthz
+      tolerations:
+      - key: "NodeWithImpairedVolumes"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
+      - key: "node-role.kubernetes.io/master"
+        operator: "Exists"
+        effect: "NoSchedule"
