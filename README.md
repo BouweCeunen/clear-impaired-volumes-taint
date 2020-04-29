@@ -26,7 +26,7 @@ kubectl patch node <node> -p '{
                 "taints": [{
                         "effect": "NoSchedule",
                         "key": "NodeWithImpairedVolumes",
-                    "value": "true"
+                        "value": "true"
                 }]
         }
 }'
