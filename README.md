@@ -4,7 +4,7 @@ There exists a node taint in Kubernetes, called `NodeWithImpairedVolumes=true:No
 
 This taint is triggered when volumes are in a pending state for a long time. A closed issue exists on GitHub but is not active (https://github.com/kubernetes/kubernetes/issues/55946). Volume limits exist on AWS nodes (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/volume_limits.html), but the number of attached EBS volumes on my Kubernetes nodes don't even come close to these limits.
 
-This is a deployment which runs in your Kubernetes cluster and removes the taint from your nodes when it occurs. If anyone has more information on why this taint is being set on my nodes, despite no EBS volumes are in an unattached state, feel free to let me know.
+This is a deployment that runs in your Kubernetes cluster and removes the taint from your nodes when it occurs. If anyone has more information on why this taint is being set on my nodes, despite no EBS volumes are in an unattached state, feel free to let me know.
 
 ## Usage
 
